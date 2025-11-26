@@ -12,6 +12,8 @@ View your app in AI Studio: https://ai.studio/apps/drive/1ov7K3d5p0U8ZXFd1mebRwl
 
 **Prerequisites:**  Node.js
 
+# Acesso ia studio
+https://aistudio.google.com/apps/drive/1ov7K3d5p0U8ZXFd1mebRwlfFi7sw9mlB?showAssistant=true&showPreview=true
 
 1. Install dependencies:
    `npm install`
