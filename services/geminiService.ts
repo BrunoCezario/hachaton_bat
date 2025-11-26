@@ -1,9 +1,9 @@
 
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
-import { SearchResult, GroundingChunk, NewsItem } from "../types";
+import { SearchResult, GroundingChunk, NewsItem, SocialMediaMention } from "../types";
 import { KNOWN_TARGETS } from "../constants";
 
-const ai = new GoogleGenAI({ apiKey: "AIzaSyBSyCK7LcBorUyhtyTAu9Hj3bftbl9PmwU" });
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const searchProductLinks = async (query: string): Promise<SearchResult> => {
   try {
@@ -214,6 +214,75 @@ export const fetchDynamicNews = async (): Promise<NewsItem[]> => {
     return [];
   } catch (error) {
     console.error("Error fetching news:", error);
+    return [];
+  }
+};
+
+export const searchSocialMedia = async (query: string): Promise<SocialMediaMention[]> => {
+  try {
+    const prompt = `
+      Atue como uma ferramenta de "Social Listening" (Escuta Social).
+      O usuário quer monitorar menções, vendas ilegais ou reviews do produto: "${query}".
+
+      INSTRUÇÃO DE BUSCA:
+      Utilize o Google Search para encontrar vídeos, postagens, shorts e tweets RECENTES nas plataformas:
+      - YouTube (site:youtube.com)
+      - TikTok (site:tiktok.com)
+      - Instagram (site:instagram.com)
+      - X / Twitter (site:twitter.com ou site:x.com)
+
+      Busque por termos como "comprar ${query}", "review ${query}", "preço ${query}", "unboxing ${query}".
+
+      TAREFA DE EXTRAÇÃO:
+      Para cada resultado relevante encontrado, extraia ou infira os dados no formato JSON.
+      Se o conteúdo for de venda ou promoção ilegal, marque sentiment como "promo".
+      Se for alerta de saúde, marque sentiment como "risk".
+      Se for review neutro, marque sentiment como "neutral".
+
+      IMPORTANTE: O campo "platform" DEVE ser estritamente minúsculo: "youtube", "tiktok", "instagram" ou "x".
+
+      Retorne APENAS um JSON array com até 8 itens.
+
+      FORMATO JSON:
+      \`\`\`json
+      [
+        {
+          "id": "1",
+          "platform": "youtube" | "tiktok" | "instagram" | "x",
+          "author": "Nome do Canal ou @Usuario",
+          "content": "Resumo do que é dito na descrição ou comentário (ex: 'Link de compra na bio', 'Review completo do sabor...')",
+          "url": "URL do vídeo ou post",
+          "date": "Data aproximada (ex: 'Há 2 dias', '20/09/2024')",
+          "sentiment": "promo" | "risk" | "neutral",
+          "likes": "Estimativa de views/likes (ex: '10k views', '50 likes')"
+        }
+      ]
+      \`\`\`
+    `;
+
+    const response: GenerateContentResponse = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: prompt,
+      config: {
+        tools: [{ googleSearch: {} }]
+      }
+    });
+
+    const text = response.text || "[]";
+    let jsonString = "[]";
+    const codeBlockMatch = text.match(/```json\n([\s\S]*?)\n```/);
+    if (codeBlockMatch) {
+      jsonString = codeBlockMatch[1];
+    } else {
+      const arrayMatch = text.match(/\[[\s\S]*\]/);
+      if (arrayMatch) jsonString = arrayMatch[0];
+    }
+
+    const mentions: SocialMediaMention[] = JSON.parse(jsonString);
+    return mentions.filter(m => m.url && m.content); // Basic validation
+
+  } catch (error) {
+    console.error("Error searching social media:", error);
     return [];
   }
 };

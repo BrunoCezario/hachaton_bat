@@ -27,7 +27,7 @@ export interface Brand {
   popular: boolean;
 }
 
-export type DashboardView = 'overview' | 'brands' | 'comparison' | 'regulatory' | 'news' | 'report-channels';
+export type DashboardView = 'overview' | 'brands' | 'comparison' | 'regulatory' | 'news' | 'report-channels' | 'media-search';
 
 export interface TechSpec {
   model: string;
@@ -40,6 +40,7 @@ export interface TechSpec {
 export interface BrandAnalysisData {
   id: string;
   name: string;
+  manufacturer: string;
   description: string;
   flagship: string;
   products: {
@@ -57,4 +58,17 @@ export interface NewsItem {
   summary: string;
   url?: string;
   type: 'seizure' | 'operation' | 'regulation';
+}
+
+export type SocialPlatform = 'youtube' | 'tiktok' | 'instagram' | 'x';
+
+export interface SocialMediaMention {
+  id: string;
+  platform: SocialPlatform;
+  author: string;
+  content: string;
+  url: string;
+  date: string;
+  sentiment: 'risk' | 'neutral' | 'promo';
+  likes?: string;
 }

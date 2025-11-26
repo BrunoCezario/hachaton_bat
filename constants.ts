@@ -104,6 +104,7 @@ export const BRAND_ANALYSIS: BrandAnalysisData[] = [
   {
     id: 'airistech',
     name: 'Airistech',
+    manufacturer: 'Shenzhen Airistech Electronic',
     description: 'Especializada em vaporização de ervas secas e concentrados via condução térmica.',
     flagship: 'Herbva Nokiva',
     products: [
@@ -142,6 +143,7 @@ export const BRAND_ANALYSIS: BrandAnalysisData[] = [
   {
     id: 'airmez',
     name: 'Airmez',
+    manufacturer: 'Airmez Technology',
     description: 'Convergência Multimídia, Gamificação e Alta Capacidade de Puffs.',
     flagship: 'Airmez X-Beats',
     products: [
@@ -170,6 +172,7 @@ export const BRAND_ANALYSIS: BrandAnalysisData[] = [
   {
     id: 'hqd',
     name: 'HQD',
+    manufacturer: 'Shenzhen HQD Tech',
     description: 'Descartáveis de média duração e alta penetração de mercado.',
     flagship: 'Cuvie Air',
     products: [
@@ -196,6 +199,7 @@ export const BRAND_ANALYSIS: BrandAnalysisData[] = [
   {
     id: 'vapelustion',
     name: 'Vapelustion',
+    manufacturer: 'Shenzhen Vapelustion',
     description: 'Identidade Visual e Subcultura (Anime/Manga).',
     flagship: 'Hannya Airtok',
     products: [
@@ -222,6 +226,7 @@ export const BRAND_ANALYSIS: BrandAnalysisData[] = [
   {
     id: 'elfbar',
     name: 'Elf Bar',
+    manufacturer: 'iMiracle (Heaven Gifts)',
     description: 'Líder global em descartáveis, massificação do design "box".',
     flagship: 'BC4000/5000',
     products: [
@@ -249,6 +254,7 @@ export const BRAND_ANALYSIS: BrandAnalysisData[] = [
   {
     id: 'ignite',
     name: 'Ignite',
+    manufacturer: 'Ignite International Brands',
     description: 'Marca lifestyle premium, foco em estética e status.',
     flagship: 'V50 / V80',
     products: [
@@ -276,6 +282,7 @@ export const BRAND_ANALYSIS: BrandAnalysisData[] = [
   {
     id: 'vaporesso',
     name: 'Vaporesso',
+    manufacturer: 'Smoore International',
     description: 'Referência em Pod Systems abertos e tecnologia de atomização.',
     flagship: 'XROS Series',
     products: [
@@ -302,6 +309,7 @@ export const BRAND_ANALYSIS: BrandAnalysisData[] = [
   {
     id: 'geekvape',
     name: 'GeekVape',
+    manufacturer: 'Geekvape Technology',
     description: 'Durabilidade extrema e construção robusta (IP68).',
     flagship: 'Aegis Series',
     products: [
@@ -328,6 +336,7 @@ export const BRAND_ANALYSIS: BrandAnalysisData[] = [
   {
     id: 'zyn',
     name: 'Zyn',
+    manufacturer: 'Swedish Match (PMI)',
     description: 'Sachês de nicotina (Nicotine Pouches) sem tabaco.',
     flagship: 'Zyn Slim',
     products: [
@@ -346,6 +355,7 @@ export const BRAND_ANALYSIS: BrandAnalysisData[] = [
   {
     id: 'nasty',
     name: 'Nasty',
+    manufacturer: 'Nasty Worldwide',
     description: 'Famosa mundialmente pelos e-liquids "Low Mint".',
     flagship: 'Nasty Fix',
     products: [
@@ -371,6 +381,7 @@ export const BRAND_ANALYSIS: BrandAnalysisData[] = [
   {
     id: 'oxbar',
     name: 'Oxbar',
+    manufacturer: 'Oxva Tech',
     description: 'Design jovem, transparente e acessórios inclusos.',
     flagship: 'G8000',
     products: [
@@ -396,6 +407,7 @@ export const BRAND_ANALYSIS: BrandAnalysisData[] = [
   {
     id: 'nikbar',
     name: 'NikBar',
+    manufacturer: 'NikBar Official (BR)',
     description: 'Marca com forte presença e adaptação ao mercado brasileiro.',
     flagship: 'NikBar 6000',
     products: [
@@ -421,6 +433,7 @@ export const BRAND_ANALYSIS: BrandAnalysisData[] = [
   {
     id: 'voopoo',
     name: 'Voopoo',
+    manufacturer: 'ICCPP Group',
     description: 'Tecnologia de chips (GENE) e velocidade de disparo.',
     flagship: 'Drag Series',
     products: [
@@ -438,6 +451,7 @@ export const BRAND_ANALYSIS: BrandAnalysisData[] = [
   {
     id: 'smok',
     name: 'Smok',
+    manufacturer: 'Shenzhen IVPS',
     description: 'Pioneira na massificação de Pod Systems e Coils sub-ohm.',
     flagship: 'Nord / Novo',
     products: [
@@ -455,6 +469,7 @@ export const BRAND_ANALYSIS: BrandAnalysisData[] = [
   {
     id: 'vuse',
     name: 'Vuse',
+    manufacturer: 'British American Tobacco',
     description: 'Marca de "Big Tobacco" (BAT), foco em sistemas fechados.',
     flagship: 'Vuse ePod 2',
     products: [
@@ -480,6 +495,7 @@ export const BRAND_ANALYSIS: BrandAnalysisData[] = [
   {
     id: 'velo',
     name: 'Velo',
+    manufacturer: 'British American Tobacco',
     description: 'Sachês de nicotina da BAT, concorrente direto do Zyn.',
     flagship: 'Velo Pouches',
     products: [

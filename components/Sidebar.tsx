@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { DashboardView } from '../types';
-import { downloadFullReport, generateFullIntelligenceCSV } from '../services/exportService';
+import { downloadFullReport } from '../services/exportService';
 
 interface SidebarProps {
   currentView: DashboardView;
@@ -18,6 +18,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView }) =
     { id: 'brands', label: 'Análise de Marcas', icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    )},
+    { id: 'media-search', label: 'Busca em Mídias', icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
       </svg>
     )},
     { id: 'comparison', label: 'Comparativo Técnico', icon: (
@@ -42,52 +47,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView }) =
     )},
   ];
 
-  const handleSendFullReport = () => {
-    try {
-      // 1. Generate CSV data
-      const csvData = generateFullIntelligenceCSV();
-      
-      // 2. Download File
-      const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      const date = new Date().toISOString().split('T')[0];
-      link.href = url;
-      link.setAttribute('download', `audita_vape_full_report_${date}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-
-      // 3. Open Mail Client
-      const subject = encodeURIComponent("Dossiê Completo - Inteligência de Mercado (RDC 46/2009)");
-      const body = encodeURIComponent(`À Ouvidoria da ANVISA,
-
-Prezados,
-
-Segue em anexo o relatório completo de inteligência (CSV) gerado pelo sistema Audita Vape IA.
-
-O arquivo contém:
-- Mapeamento de marcas e produtos ilegais;
-- Comparativos técnicos (baterias e puffs);
-- Lista de alvos de monitoramento prioritário;
-- Registro de operações recentes.
-
-Solicito a análise para fins de fiscalização.
-
-Atenciosamente,
-[Inserir Identificação]`);
-
-      setTimeout(() => {
-         window.location.href = `mailto:ouvidoria@anvisa.gov.br?subject=${subject}&body=${body}`;
-      }, 500);
-
-    } catch (e) {
-      console.error("Erro ao preparar envio:", e);
-      alert("Erro ao gerar o relatório para envio.");
-    }
-  };
-
   return (
     <div className="w-full md:w-64 bg-dark-card border-r border-gray-800 flex flex-col h-full shrink-0">
       <div className="p-6 border-b border-gray-800">
@@ -102,7 +61,7 @@ Atenciosamente,
         <p className="text-xs text-gray-500 mt-1">INTELIGÊNCIA RDC 46/2009</p>
       </div>
 
-      <nav className="flex-1 p-4 space-y-2">
+      <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
         <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4 px-2">Módulos</p>
         {menuItems.map((item) => (
           <button
@@ -123,27 +82,15 @@ Atenciosamente,
       <div className="p-4 border-t border-gray-800 space-y-4">
         <div>
            <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Ferramentas de BI</p>
-           <div className="space-y-2">
-             <button 
-               onClick={downloadFullReport}
-               className="w-full flex items-center gap-2 bg-blue-600/10 hover:bg-blue-600/20 text-blue-400 hover:text-blue-300 px-3 py-2 rounded-lg text-xs font-bold transition-all border border-blue-600/30"
-             >
-               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-               </svg>
-               Baixar Dados Brutos
-             </button>
-
-             <button 
-               onClick={handleSendFullReport}
-               className="w-full flex items-center gap-2 bg-red-600/10 hover:bg-red-600/20 text-red-400 hover:text-red-300 px-3 py-2 rounded-lg text-xs font-bold transition-all border border-red-600/30"
-             >
-               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-               </svg>
-               Enviar Relatório Geral
-             </button>
-           </div>
+           <button 
+             onClick={downloadFullReport}
+             className="w-full flex items-center gap-2 bg-blue-600/10 hover:bg-blue-600/20 text-blue-400 hover:text-blue-300 px-3 py-2 rounded-lg text-xs font-bold transition-all border border-blue-600/30"
+           >
+             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+             </svg>
+             Baixar Dados Brutos
+           </button>
         </div>
 
         <div className="bg-gray-800/50 rounded-lg p-3 flex items-center justify-between">

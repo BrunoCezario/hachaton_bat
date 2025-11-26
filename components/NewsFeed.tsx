@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { RECENT_NEWS } from '../constants';
 import { fetchDynamicNews } from '../services/geminiService';
@@ -71,33 +72,6 @@ export const NewsFeed: React.FC = () => {
     URL.revokeObjectURL(url);
   };
 
-  const handleReportEmail = () => {
-    // 1. Baixar o arquivo para o usuário poder anexar
-    handleExportCsv();
-
-    // 2. Preparar o email
-    const subject = encodeURIComponent("Denúncia - Monitoramento de Inteligência RDC 46/2009");
-    const body = encodeURIComponent(`À Ouvidoria da ANVISA,
-
-Prezados,
-
-Segue em anexo o relatório CSV gerado automaticamente contendo evidências recentes (notícias e operações) sobre o comércio e circulação irregular de Dispositivos Eletrônicos para Fumar (DEFs).
-
-Os dados foram coletados via monitoramento de fontes abertas (OSINT).
-
-Atenciosamente,
-[Inserir Identificação]`);
-
-    // 3. Abrir cliente de email
-    // Usando setTimeout para garantir que o download inicie antes da troca de contexto (alguns browsers bloqueiam)
-    setTimeout(() => {
-        window.location.href = `mailto:ouvidoria@anvisa.gov.br?subject=${subject}&body=${body}`;
-    }, 500);
-    
-    // Opcional: Feedback visual simples
-    alert("O relatório CSV foi baixado.\n\nSeu cliente de e-mail será aberto. Por favor, arraste o arquivo CSV baixado para o anexo do e-mail.");
-  };
-
   useEffect(() => {
     loadNews();
   }, []);
@@ -130,18 +104,6 @@ Atenciosamente,
         </div>
         
         <div className="flex flex-wrap gap-2">
-          <button 
-            onClick={handleReportEmail}
-            disabled={news.length === 0 || isLoading}
-            className="flex items-center gap-2 px-4 py-2 bg-red-600/20 hover:bg-red-600/40 text-red-400 border border-red-600/50 rounded-lg transition-all text-xs font-bold disabled:opacity-50"
-            title="Baixar relatório e abrir e-mail para denúncia"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-            Enviar Relatório
-          </button>
-
           <button 
             onClick={handleExportCsv}
             disabled={news.length === 0 || isLoading}

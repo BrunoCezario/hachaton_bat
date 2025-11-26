@@ -20,10 +20,14 @@ export const BrandAnalysis: React.FC = () => {
                 : 'bg-dark-surface border-gray-700 hover:border-gray-500 opacity-70 hover:opacity-100'
             }`}
           >
-            <h4 className={`font-bold ${selectedBrandId === brand.id ? 'text-white' : 'text-gray-300'}`}>
-              {brand.name}
-            </h4>
-            <p className="text-xs text-gray-400 mt-1 truncate">{brand.description}</p>
+            <div className="flex flex-col">
+              <span className={`font-bold ${selectedBrandId === brand.id ? 'text-white' : 'text-gray-300'}`}>
+                {brand.name}
+              </span>
+              <span className="text-[10px] text-gray-500 font-medium uppercase tracking-wider">
+                {brand.manufacturer}
+              </span>
+            </div>
           </button>
         ))}
       </div>
@@ -32,12 +36,19 @@ export const BrandAnalysis: React.FC = () => {
       <div className="flex-1 bg-dark-card border border-gray-700 rounded-2xl p-6 md:p-8 overflow-y-auto custom-scrollbar">
         <div className="flex justify-between items-start mb-6 border-b border-gray-700 pb-6">
           <div>
+            <div className="flex items-center gap-2 mb-1">
+               <span className="text-xs text-gray-500 font-bold uppercase tracking-widest border border-gray-700 px-2 py-0.5 rounded">
+                  Fabricante: {selectedBrand.manufacturer}
+               </span>
+            </div>
             <h2 className="text-3xl font-bold text-white mb-2">{selectedBrand.name}</h2>
             <p className="text-green-400 text-sm font-medium">{selectedBrand.description}</p>
           </div>
-          <span className="bg-gray-700 text-gray-300 text-xs px-3 py-1 rounded-full border border-gray-600">
-            Flagship: {selectedBrand.flagship}
-          </span>
+          <div className="flex flex-col items-end gap-2">
+            <span className="bg-gray-700 text-gray-300 text-xs px-3 py-1 rounded-full border border-gray-600">
+              Flagship: {selectedBrand.flagship}
+            </span>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

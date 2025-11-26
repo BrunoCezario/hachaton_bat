@@ -10,6 +10,7 @@ import { TechComparison } from './components/TechComparison';
 import { RegulatoryScenario } from './components/RegulatoryScenario';
 import { NewsFeed } from './components/NewsFeed';
 import { ReportChannels } from './components/ReportChannels';
+import { MediaSearch } from './components/MediaSearch';
 import { Disclaimer } from './components/Disclaimer';
 import { POPULAR_BRANDS } from './constants';
 import { searchProductLinks } from './services/geminiService';
@@ -49,6 +50,11 @@ function App() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleNewAudit = () => {
+    setSearchResult(null);
+    setError(null);
   };
 
   // Render content based on current view
@@ -104,7 +110,7 @@ function App() {
                   <p className="text-green-400 text-sm font-mono">Processando auditoria...</p>
                 </div>
               ) : searchResult || error ? (
-                <ResultDisplay result={searchResult} error={error} />
+                <ResultDisplay result={searchResult} error={error} onReset={handleNewAudit} />
               ) : (
                 <BrandList brands={POPULAR_BRANDS} onSelectBrand={handleSearch} />
               )}
@@ -113,6 +119,8 @@ function App() {
         );
       case 'brands':
         return <BrandAnalysis />;
+      case 'media-search':
+        return <MediaSearch />;
       case 'comparison':
         return <TechComparison />;
       case 'regulatory':
