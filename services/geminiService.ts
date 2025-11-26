@@ -3,7 +3,9 @@ import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 import { SearchResult, GroundingChunk, NewsItem, SocialMediaMention } from "../types";
 import { KNOWN_TARGETS } from "../constants";
 
-const ai = new GoogleGenAI({ apiKey: "AIzaSyAVEUnjb--Z8EbJwNg6DyrLno9JznmFJ8w" });
+
+
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 export const searchProductLinks = async (query: string): Promise<SearchResult> => {
   try {
